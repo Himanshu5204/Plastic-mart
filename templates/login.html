@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <form method="POST">
+            {% csrf_token %}
+            <h1>Login</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                        {{ message }} 
+                    </p>
+                {% endfor %}
+            {% endif %}
+            <div class="input-box">
+                <input type="text" placeholder="Username" name="username" required>
+                <i class='bx bxs-user' id="user"></i>
+            </div>
+            
+            <div class="input-box">
+                <input type="password" placeholder="Password" name="password" required>
+                <i class='bx bxs-lock-alt' id="login"></i>
+            </div>
+            
+            <div class="remember-forgot">
+                <label>
+                    <input type="checkbox"> Remember Me
+                </label>
+                <a href="{% url 'password_reset' %}">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn">Login</button>
+            
+            <div class="register-link"> 
+                <p>Don't have an account?<a href="{% url 'create_cust' %}"> SignUp...!</a></p><br>
+                <p>Don't have an account?No Problem.Click here to continue browsing as a <a href="{% url 'home' %}">Guest....!</a></p>
+            </div>
+        </form>
+    </div>  
+</body>
+</html>

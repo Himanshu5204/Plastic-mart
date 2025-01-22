@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/css/registration.css">
+  <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+  <title>Sign-up</title>
+
+
+</head>
+
+<body>
+
+  <div class="background">
+    <form action="" method="POST">
+      {% csrf_token %}
+      <h2><img src="/static/images/register.png" class="image" width="40" alt="SignUp logo">
+        SignUp
+      </h2>
+      <hr>
+      {% if messages %}
+      {% for message in messages %}
+      <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+      </p>
+      {% endfor %}
+      {% endif %}
+
+      <div class="form-group col-md-12 container">
+        <label for="userName">User Name</label>
+        <input type="text" name="username" Required class="form-control">
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstname" Required class="form-control">
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastname" Required class="form-control">
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="mobileNo">Phone Number</label>
+        <input type="text" maxlength="10" pattern="[0-9]{10}" name="mobileno" class="form-control" Required>
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="inputEmail4">Email</label>
+        <input type="email" class="form-control" name="email" Required id="inputEmail4">
+      </div>
+
+      <div class="form-group col-md-12 container">
+        <div class="custom-control custom-radio custom-control-inline">
+          <label for="Gender" style="margin-left: -24px;">Gender :
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="radio" id="customRadioInline1" name="gender" class="custom-control-input" Required>
+          <label class="custom-control-label" for="customRadioInline1">Male</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="customRadioInline2" name="gender" class="custom-control-input" Required>
+          <label class="custom-control-label" for="customRadioInline2">Female</label>
+        </div>
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="address">Address</label>
+        <input type="text" name="address" Required class="form-control">
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="state">State</label>
+    <select class="form-control" id="state" name="state">
+        <option value="">Select State</option>
+        {% for state in states %}
+            <option value="{{ state.id }}">{{ state.name }}</option>
+        {% endfor %}
+    </select>
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="city">City</label>
+        <select class="form-control" id="city" name="city">
+          <option value="">Select City</option>
+          {% for city in cities %}
+          <option value="{{ city.id }}">{{ city.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="pincode">Pincode</label>
+        <input type="text" name="pincode" pattern="[0-9]{6}" title="Please enter a 6-digit pin code" required
+          class="form-control">
+      </div>
+      <div class="form-group col-md-12 container">
+        <label for="inputPassword4">Password</label>
+        <input type="password" class="form-control" name="password" id="inputPassword4" required
+          pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+          title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character" />
+        <i class="bi bi-eye-slash" id="togglePassword"></i>
+      </div>
+      <div class="form-group col-md-12 container ">
+        <label for="inputPassword5">Confirm Password</label>
+        <input type="password" class="form-control" name="cpassword" id="inputPassword5" Required>
+        <i class="bi bi-eye-slash" id="togglePassword1"></i>
+      </div>
+
+      <div class="form-group col-md-12 container">
+        <button type="submit" id="btn1">Sign Up</button> &nbsp;&nbsp; <button type="reset" id="btn2">Reset</button>
+      </div>
+      <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Already
+        have an account?&nbsp;&nbsp;&nbsp;<a href="/login/">Sign in</a></p>
+      <p>Don't have an account?No Problem.Click here to continue browsing
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        as a <a href="{% url 'home' %}">Guest....!</a>
+      </p>
+    </form>
+  </div>
+  <!-- Optional JavaScript; choose one of the two! -->
+  <!-- For password -->
+  <script>
+    const togglePassword2 = document
+      .querySelector('#togglePassword');
+    const password2 = document.querySelector('#inputPassword4');
+    togglePassword2.addEventListener('click', () => {
+      // Toggle the type attribute using
+      // getAttribure() method
+      const type = password2
+        .getAttribute('type') === 'password' ?
+        'text' : 'password';
+      password2.setAttribute('type', type);
+      // Toggle the eye and bi-eye icon
+      this.classList.toggle('bi-eye');
+    });
+  </script>
+  <!-- For confirm password -->
+  <script>
+    const togglePassword = document
+      .querySelector('#togglePassword1');
+    const password = document.querySelector('#inputPassword5');
+    togglePassword.addEventListener('click', () => {
+      // Toggle the type attribute using
+      // getAttribure() method
+      const type = password
+        .getAttribute('type') === 'password' ?
+        'text' : 'password';
+      password.setAttribute('type', type);
+      // Toggle the eye and bi-eye icon
+      this.classList.toggle('bi-eye');
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      var date_input = $('input[name="date"]'); //our date input has the name "date"
+      var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+      date_input.datepicker({
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      })
+    })
+  </script>
+
+
+
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+{% extends "base.html" %}
+{% block content %}
+<html>
+
+<body>
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Shop</h1>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          {% comment %} <p> <b> Add to Cart: </b>If you decide to purchase the product, click on the "Add to Cart" or
+            "Buy Now" button.
+            This action will add the item to your virtual shopping cart.</p> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Products Shop Start-->
+  <div class="container-fluid fruite py-5">
+    <div class="container py-6">
+      <div class="tab-class text-center">
+        <div class="row g-4">
+          <div class="col-lg-4 text-start">
+            <h1>Our Products</h1>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div id="tab-1" class="tab-pane fade show p-0 active">
+            <div class="row g-4">
+              <div class="col-lg-12">
+                <div class="row g-4">
+                  {% if results %}
+                  {% for i in results %}
+                  <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="rounded position-relative fruite-item">
+                      <div class="fruite-img">
+                        <a href="{% url 'product_description' p_id=i.id %}">
+                          <img src="/media/{{i.p_image}}" id="img-fluid" class="w-100 rounded-top" height="100px"
+                            alt="">
+                        </a>
+                      </div>
+                      <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; left: 10px;">{{i.category}}</div>
+                      <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                        <h4>{{i.p_name}}</h4>
+                        <p>{{i.description}}</p>
+                        <div class="d-flex justify-content-between flex-lg-wrap">
+                          <p class="text-dark fs-5 fw-bold mb-0">
+                            {{i.selling_price}} &#8377;
+
+                          </p>
+                          {% if i.quantity == 0 %}
+                          <button class="btn border border-secondary rounded-pill px-3 text-primary">Out of
+                            stock</button>
+                          {% else %}
+                          <a href="{% url 'add_to_cart' p_id=i.id %}"
+                            class="btn border border-secondary rounded-pill px-3 text-primary">
+                            <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                            Add to cart
+                          </a>
+                          {% endif %}
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  {% else %}
+                  <div class="col-lg-12">
+                    <div class="text-center">
+                      <h3>Product not found...! Search the correct product...!</h3>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <!-- Fruits Shop End-->
+  {% endblock %}
+  <script src="/static/css/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/css/js/tiny-slider.js"></script>
+  <script src="/static/css/js/custom.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+{% extends "base.html" %} 
+{% block content %} 
+ 
+<body> 
+    <div class="hero"> 
+        <div class="container"> 
+            <div class="row justify-content-between"> 
+                <div class="col-lg-5"> 
+                    <div class="intro-excerpt"> 
+                        <h1>Cart</h1> 
+                        {% if messages %} 
+                        {% for message in messages %} 
+                        <div class="alert alert-success" role="alert"> 
+                            {{ message }} 
+                        </div> 
+                        {% endfor %} 
+                        {% endif %} 
+                    </div> 
+                </div> 
+                <div class="col-lg-7"></div> 
+            </div> 
+        </div> 
+    </div> 
+ 
+    <div class="untree_co-section before-footer-section"> 
+        <div class="container"> 
+            <div class="row mb-5"> 
+                {% if cart_items %} 
+                <form class="col-md-12" method="post" action="{% url 'update_cart_item' %}"> 
+                    {% csrf_token %} 
+                    <div class="site-blocks-table"> 
+                        <table class="table"> 
+                            <thead> 
+                                <tr> 
+                                    <th class="product-thumbnail">Image</th> 
+                                    <th class="product-name">Product</th> 
+                                    <th class="product-price">Price</th> 
+                                    <th class="product-quantity">Quantity</th> 
+                                    <th class="product-total">Total</th> 
+                                    <th class="product-remove">Remove</th> 
+                                </tr> 
+                            </thead> 
+                            <tbody> 
+                                {% for cart_item in cart_items %} 
+                                <tr> 
+                                    <td class="product-thumbnail"> 
+                                        <img src="/media/{{ cart_item.product.p_image }}" alt="Image" class="img-fluid"> 
+                                    </td> 
+                                    <td class="product-name"> 
+                                        <h2 class="h5 text-black">{{ cart_item.product.p_name }}</h2>
+                                    </td> 
+                                    <td> 
+                                        {% if cart_item.product.selling_price %} 
+                                        {{ cart_item.get_product_price }} 
+                                        {% else %} 
+                                        N/A 
+                                        {% endif %} 
+                                    </td> 
+                                    <td> 
+                                        <div class="input-group mb-3 d-flex align-items-center quantity-container" 
+                                            style="max-width: 120px;"> 
+                                            <div class="input-group-prepend"> 
+                                                <button id="decrement_{{ cart_item.id }}" 
+                                                    class="btn btn-outline-black decrease" 
+                                                    type="button">&minus;</button> 
+                                            </div> 
+                                            <input type="number" name="quantity" min=0 max=10 id="quantity_{{ cart_item.id }}" 
+                                                class="form-control text-center quantity-amount quantity" 
+                                                value="{{ cart_item.quantity }}" 
+                                                data-price="{{ cart_item.product.selling_price }}" placeholder="" 
+                                                aria-label="Example text with button addon" 
+                                                aria-describedby="button-addon1"> <button 
+                                                id="increment_{{ cart_item.id }}" class="btn btn-outline-black increase" 
+                                                type="button">&plus;</button> 
+                                        </div> 
+                                    </td> 
+                    </div> 
+                    <td class="sub-total" id="sub_total_{{ cart_item.id }}">{{ cart_item.sub_total }}</td> 
+                    <td><a href="{% url 'remove_cart' p_id=cart_item.id %}" class="btn btn-black btn-sm">X</a></td> 
+                    </tr> 
+                    {% endfor %} 
+                    </tbody> 
+                    </table> 
+            </div> 
+            {% else %} 
+            <div class="col-md-12 text-center"> 
+                <h1>Your cart is empty. Continue shopping <a href={% url 'shop' %}>here</a>.</h1> 
+            </div> 
+            {% endif %} 
+        </div> 
+ 
+        {% if cart_items %} 
+        <div class="row"> 
+            <div class="col-md-6"> 
+                <div class="row mb-5"> 
+                    <div class="col-md-6 mb-3 mb-md-0"> 
+                        <button class="btn btn-outline-black btn-sm btn-block" 
+                            onclick="window.location.href='/shop/'">Continue Shopping</button> 
+                    </div> 
+                    <div class="col-md-6">
+                        <button class="btn btn-black btn-sm btn-block" type="submit">Update Cart</button> 
+                    </div> 
+                </div> 
+                <div class="row"> 
+                    <div class="col-md-12"> 
+                        <label class="text-black h4" for="coupon">Coupon</label> 
+                        <p>Enter your coupon code if you have one.</p> 
+                    </div> 
+                    <div class="col-md-8 mb-3 mb-md-0"> 
+                        <input type="text" class="form-control py-3" id="coupon" placeholder="Currently Unavailable" 
+                            readonly> 
+                    </div> 
+                    <div class="col-md-4"> 
+                        <button class="btn btn-black">Apply Coupon</button> 
+                    </div> 
+                </div> 
+            </div> 
+            </form> 
+ 
+            <div class="col-md-6 pl-5"> 
+                <div class="row justify-content-end"> 
+                    <div class="col-md-7"> 
+                        <div class="row"> 
+                            <div class="col-md-12 text-right border-bottom mb-5"> 
+                                <h3 class="text-black h4 text-uppercase">Cart Totals</h3> 
+                            </div> 
+                        </div> 
+                        <div class="row mb-3"> 
+                            <div class="col-md-6"> 
+                                <span class="text-black">Subtotal</span> 
+                            </div> 
+                            <div class="col-md-6 text-right"> 
+                                <strong class="text-black" id="total">{{ total }}</strong> 
+                            </div> 
+                        </div> 
+                        <div class="row mb-3"> 
+                            <div class="col-md-6"> 
+                                <span class="text-black">Tax (10.0%)</span> 
+                            </div> 
+                            <div class="col-md-6 text-right"> 
+                                <strong class="text-black" id="tax">{{ tax }}</strong> 
+                            </div> 
+                        </div> 
+                        <div class="row mb-5"> 
+                            <div class="col-md-6"> 
+                                <span class="text-black">Total</span> 
+                            </div> 
+                            <div class="col-md-6 text-right"> 
+                                <strong class="text-black" id="grand_total">{{ grand_total }}</strong> 
+                            </div> 
+                        </div>
+                        <div class="row"> 
+                            <div class="col-md-12"> 
+                                <button class="btn btn-black btn-lg py-3 btn-block" 
+                                    onclick="window.location='{% url 'checkout' %}'">Proceed To Checkout</button> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+        {% endif %} 
+    </div> 
+    </div> 
+    <script> 
+        document.addEventListener('DOMContentLoaded', function () { 
+    // Get all decrement buttons 
+    const decrementButtons = document.querySelectorAll('.decrease'); 
+ 
+    // Iterate over each decrement button 
+    decrementButtons.forEach(button => { 
+        button.addEventListener('click', () => { 
+            // Get the corresponding quantity input field 
+            const quantityInput = document.getElementById(`quantity_${button.id.split('_')[1]}`); 
+ 
+            // Get the current value and decrement if greater than 1 
+            let currentValue = parseInt(quantityInput.value); 
+            if (currentValue > 1) { 
+                currentValue--; 
+                quantityInput.value = currentValue; 
+                updateCartItem(button.id.split('_')[1], currentValue); 
+            } 
+        }); 
+    }); 
+ 
+    // Get all increment buttons 
+    const incrementButtons = document.querySelectorAll('.increase'); 
+ 
+    // Iterate over each increment button 
+    incrementButtons.forEach(button => { 
+        button.addEventListener('click', () => { 
+            // Get the corresponding quantity input field 
+            const quantityInput = document.getElementById(`quantity_${button.id.split('_')[1]}`); 
+ 
+            // Get the current value 
+            let currentValue = parseInt(quantityInput.value); 
+ 
+            // Check if current value is less than 10 before incrementing 
+            if (currentValue < 10) { 
+                currentValue++; 
+                quantityInput.value = currentValue; 
+                updateCartItem(button.id.split('_')[1], currentValue); 
+            } 
+        }); 
+    }); 
+ 
+    // Function to update cart item subtotal 
+    function updateCartItem(itemId, quantity) { 
+        const quantityInput = document.getElementById(`quantity_${itemId}`); 
+        if (!quantityInput) return; // Exit if quantity input field is not found 
+ 
+        const price = parseFloat(quantityInput.getAttribute('data-price')); 
+        const subTotal = quantity * price; 
+        document.getElementById(`sub_total_${itemId}`).innerText = subTotal.toFixed(2); // Update the subtotal in the UI 
+ 
+        // Recalculate total, tax, and grand total 
+        let total = 0; 
+        document.querySelectorAll('.sub-total').forEach(subTotalElement => { 
+            total += parseFloat(subTotalElement.innerText); 
+        }); 
+        const tax = total * 0.1; 
+        const grandTotal = total + tax; 
+ 
+        // Update the total, tax, and grand total in the UI 
+        document.getElementById('total').innerText = total.toFixed(2); 
+        document.getElementById('tax').innerText = tax.toFixed(2); 
+        document.getElementById('grand_total').innerText = grandTotal.toFixed(2); 
+    } 
+}); 
+ 
+    </script> 
+    <script src="/static/css/js/bootstrap.bundle.min.js"></script> 
+    <script src="/static/css/js/tiny-slider.js"></script> 
+    <script src="/static/css/js/custom.js"></script> 
+</body> 
+ 
+</html> 
+{% endblock %}

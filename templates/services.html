@@ -1,0 +1,142 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+{% extends "base.html" %}
+{% block content %}
+<body>
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Services</h1>
+								<p class="mb-4">Welcome to the Services Page of Plastic Mart web site ,
+									            where our commitment goes beyond products – it extends to a seamless and enriching shopping experience.
+												Here Customers can browse products, add them to their cart, and make purchases securely.</p>
+								<p><a href="{% url 'shop' %}" class="btn btn-secondary me-2">Shop Now</a><a href="{% url 'shop' %}" class="btn btn-white-outline">Explore</a></p>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<div class="hero-img-wrap">
+								<img src="/static/images/home_image.png" class="img-fluid-home">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+
+		
+
+		<!-- Start Why Choose Us Section -->
+		<div class="why-choose-section">
+			<div class="container">
+				
+				
+				<div class="row my-5">
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/truck.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Fast &amp; Free Shipping</h3>
+							<p>Offer free shipping for orders that meet a certain minimum purchase amount.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/bag.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Easy to Shop</h3>
+							<p>We provide User-Friendly Interface so you can easy to shop products.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/support.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>24/7 Support</h3>
+							<p>With the help of 24/7 support customers who may shop at any time of day or night.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/return.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Hassle Free Returns</h3>
+							<p>Implementing hassle-free returns is crucial for building trust and enhancing the customer experience in e-commerce.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/truck.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Fast &amp; Free Shipping</h3>
+							<p>Offer free shipping for orders that meet a certain minimum purchase amount.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/bag.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Easy to Shop</h3>
+							<p>We provide User-Friendly Interface so you can easy to shop products.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/support.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>24/7 Support</h3>
+							<p>With the help of 24/7 support customers who may shop at any time of day or night.</p>
+						</div>
+					</div>
+
+					<div class="col-6 col-md-6 col-lg-3 mb-4">
+						<div class="feature">
+							<div class="icon">
+								<img src="/static/images/return.svg" alt="Image" class="imf-fluid">
+							</div>
+							<h3>Hassle Free Returns</h3>
+							<p>Implementing hassle-free returns is crucial for building trust and enhancing the customer experience in e-commerce.</p>
+						</div>
+					</div>
+                    <div class="row justify-content-center">
+						<div class="col-6 col-md-6 col-lg-3 mb-4">
+							<div class="feature">
+								<div class="icon">
+									<img src="/static/images/return.svg" alt="Image" class="imf-fluid">
+								</div>
+								<h3>Contact-us</h3>
+								<p>Click Here..! If any query contact-us on <b><a href="{% url 'contact' %}">Contact-Us</a><b></p><br>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<!-- End Why Choose Us Section -->
+		<script src="/static/css/js/bootstrap.bundle.min.js"></script>
+		<script src="/static/css/js/tiny-slider.js"></script>
+		<script src="/static/css/js/custom.js"></script>
+	</body>
+
+</html>
+{% endblock %}

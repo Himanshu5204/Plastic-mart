@@ -1,0 +1,17 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+<form action="{% url 'admin:myapp_booking_generate_report' %}" method="post">
+    {% csrf_token %}
+    <label for="date_range">{% trans "Date Range:" %}</label>
+    <select name="date_range" id="date_range">
+        <option value="today">{% trans "Today" %}</option>
+        <option value="last_7_days">{% trans "Last 7 Days" %}</option>
+        <option value="this_month">{% trans "This Month" %}</option>
+        <option  value="last_month">{% trans "Last Month" %}</option>
+    </select>
+    <input type="submit" name="_selected_action" value="{% trans 'Generate Report' %}">
+</form>
+{{ block.super }}
+{% endblock %}

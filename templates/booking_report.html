@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Booking Report | Om Plastic Mart</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.5;
+            color: #111827;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 1.25rem 2.5rem;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 0;
+        }
+        section {
+            padding: 1.25rem 2.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        th {
+            text-align: left;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1rem;
+            color: black;
+            background-color: lightgrey;
+            border-bottom: none;
+        }
+        td {
+            font-size: 1rem;
+            color: #111827;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .bg-gray-50 {
+            background-color: #ffffff !important;
+        }
+        .bg-white {
+            background-color: #ffffff;
+        }
+        .font-medium {
+            font-weight: 500;
+        }
+        .text-xs {
+            font-size: 1rem;
+        }
+    </style>
+    <title>Booking Report | Om Plastic Mart</title>
+</head>
+<body>
+    <div class="max-w-7xl mx-auto">
+        <header>
+            <center><h1 style="font-size: 2.25rem; line-height: 1.1;" class="text-gray-900">Order Report</h1></center>
+        </header>         
+
+        <hr>
+
+        <section style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <p class="text-xs">
+                    <strong>Company Name:</strong>
+                    {{ shop.name }}
+                    <br />
+                    <strong>Date Generated:</strong>
+                    {{ date_generated }}
+                </p>
+                <p class="text-xs">
+                    <strong>Address:</strong><br>
+                    {{ shop.address|safe }}
+                </p>
+                <p class="text-xs">
+                    <strong>Contact Details:</strong><br>
+                    {{ shop.phone_number }}<br>
+                    {{ shop.email }}
+                </p>
+            </div>
+            <div>
+                <!-- Add your company logo here -->
+                <img src="{% static 'images/c_logo.png' %}" alt="Company Logo" style="max-width: 100px;">                     </div>
+            <hr>
+        </section>
+
+        <br>
+        <br>
+
+        <section style="display: flex; justify-content: space-between;">
+            {% comment %} <p class="text-xs">
+                <strong>Address:</strong><br>
+                {{ shop.address|safe }}
+            </p>
+
+            <p class="text-xs text-right">
+                <strong>Contact Details:</strong><br>
+                {{ shop.contact_number }}<br>
+                {{ shop.email }}            
+            </p> {% endcomment %}
+        </section>
+
+        <section>
+            <div>
+                {% if records %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Report Date</th>
+                            <th>Customer First Name</th>
+                            <th>Customer Last Name</th>
+                            <th class="text-right">Phone</th>
+                            <th class="text-right">Order Date</th>
+                            <th class="text-right">Pin code</th>
+                            <th class="text-right">Total amount</th>
+                            <th class="text-right">Order Status</th>
+                            <th class="text-right">Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in records %}
+                        <tr>
+                            <td>{{ record.created_at|date:"d/m/Y" }}</td>
+                            <td>{{ record.fname }}</td>
+                            <td>{{ record.lname }}</td>
+                            <td>{{ record.phone }}</td>
+                            <td>{{ record.created_at|date:"d/m/Y" }}</td>
+                            <td>{{ record.pincode }}</td>
+                            <td>{{ record.total_price }}</td>
+                            <td>{{ record.status }}</td>
+                            <td>
+                                {% for order_item in record.orderitem_set.all %}
+                                {% if order_item.payment_status %}
+                                    Paid
+                                {% else %}
+                                    Not paid
+                                {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No data available for the selected date range.</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</body>
+</html>
